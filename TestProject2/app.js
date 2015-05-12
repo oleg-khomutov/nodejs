@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var mongo = require('mongoskin');
-var db - mongo.db('mongodb://localhost:27017/TestProject2', {native_parser:true});
+var db = mongo.db('mongodb://localhost:27017/TestProject2', {native_parser:true});
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(function(res, req, next){
+app.use(function(req, res, next){
   req.db = db;
   next();
 })
