@@ -16,7 +16,7 @@ function populateTable() {
       tableContent += '</tr>';
 
     });
-    alert(tableContent);
+
     $('#userList table tbody').html(tableContent);
   });
 };
