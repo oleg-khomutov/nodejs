@@ -3,6 +3,7 @@ var userListData = [];
 $(document).ready(function() {
   populateTable();
   $('#userList table tbody').on('click', 'td a.linkshowuser', showUserInfo);
+  $('#userList table tbody').on('click', 'td a.linkdeleteuser', deleteUser); 
   $('#btnAddUser').on('click', addUser);
 });
 
@@ -18,7 +19,6 @@ function populateTable() {
       tableContent += '<td>' + this.email + '</td>';
       tableContent += '<td><a hred="#" class="linkdeleteuser" rel="' + this._id + '">delete</a></td>';
       tableContent += '</tr>';
-
     });
 
     $('#userList table tbody').html(tableContent);
@@ -77,6 +77,30 @@ function addUser(event) {
   }
   else {
     alert('Please fill in all fields');
+    return false;
+  }
+};
+
+function deleteUser(event) {
+  event.preventDefault();
+
+  var confirmation = confirm('Are you sure you want to delete this user?');
+
+  if (confirmation === true) {
+    $.ajax({
+      type: 'DELETE',
+      url: '/users/deleteuser/' + $(this).attr('rel')
+    }).done(function (response) {
+      if (response.msg === '') {
+      }
+      else {
+        alert('Error: ' + response.msg);
+      }
+
+      populateTable();
+    });
+  }
+  else {
     return false;
   }
 };
